@@ -1,0 +1,47 @@
+<UserControl x:Class="ClauOS.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ClauOS.Views"
+             xmlns:vm="clr-namespace:ClauOS.ViewModels"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}"
+             d:DesignHeight="700" d:DesignWidth="1000">
+
+    <Grid Background="{DynamicResource BackgroundGradientBrush}">
+
+        <!-- Contenido: HomeTab o la app abierta desde sus tarjetas -->
+        <ContentControl x:Name="TabHost">
+            <local:HomeTab/>
+        </ContentControl>
+
+        <!-- Barra de tareas con desplegable esquina inferior izquierda -->
+        <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,24"
+                Background="{DynamicResource TaskbarBrush}"
+                BorderBrush="{DynamicResource OutlineBrush}"
+                BorderThickness="{DynamicResource CardBorderThickness}"
+                CornerRadius="{DynamicResource RadiusTheme}"
+                Effect="{StaticResource ShadowMD}"
+                Padding="12">
+            <Button x:Name="SettingsButton" Content="⚙️"
+                    Style="{StaticResource GhostButtonStyle}"
+                    Width="64" Height="64"
+                    FontSize="28"
+                    HorizontalAlignment="Left"
+                    Click="SettingsButton_Click">
+                <Button.ContextMenu>
+                    <ContextMenu x:Name="SettingsContextMenu" Style="{StaticResource ModernContextMenuStyle}" Placement="Top">
+                        <MenuItem Header="tema" Style="{StaticResource ModernMenuItemStyle}">
+                            <MenuItem Header="Default (Rosa)" Click="Theme_Click" Tag="Default" Style="{StaticResource ModernMenuItemStyle}"/>
+                            <MenuItem Header="1989 (Pastel)" Click="Theme_Click" Tag="1989" Style="{StaticResource ModernMenuItemStyle}"/>
+                            <MenuItem Header="Reputation (Oscuro)" Click="Theme_Click" Tag="Reputation" Style="{StaticResource ModernMenuItemStyle}"/>
+                        </MenuItem>
+                        <Separator Style="{StaticResource ModernSeparatorStyle}"/>
+                        <MenuItem Header="info" Style="{StaticResource ModernMenuItemStyle}" Click="About_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+        </Border>
+    </Grid>
+</UserControl>

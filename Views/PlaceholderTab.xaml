@@ -1,0 +1,23 @@
+<UserControl x:Class="ClauOS.Views.PlaceholderTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="700">
+    <ScrollViewer Style="{StaticResource ModernScrollViewerStyle}" Padding="24">
+        <StackPanel>
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Text="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                               Style="{StaticResource Heading2Style}" TextAlignment="Center" Margin="0,0,0,8" FontSize="48"/>
+                    <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                               Style="{StaticResource Heading2Style}" TextAlignment="Center" Margin="0,0,0,8"/>
+                    <TextBlock Text="En desarrollo 🚧" Style="{StaticResource BodyStyle}" TextAlignment="Center" Foreground="{DynamicResource PrimaryDarkBrush}" Margin="0,0,0,16"/>
+                    <TextBlock Text="{Binding Description, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                               Style="{StaticResource CaptionStyle}" TextAlignment="Center" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,17 @@
+<Window x:Class="ClauOS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClauOS"
+        mc:Ignorable="d"
+        Title="ClauOS" Height="720" Width="1100"
+        MinHeight="600" MinWidth="900"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        Style="{StaticResource MainWindowStyle}">
+
+    <Grid x:Name="MainGrid">
+        <ContentControl x:Name="ViewContainer" Content="{Binding CurrentView}"/>
+    </Grid>
+</Window>
