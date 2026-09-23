@@ -1,0 +1,54 @@
+## ClauOS - .gitignore estándar .NET/WPF
+
+# Carpetas de compilación
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.sln.docstates
+*.vcxproj.filters
+
+# Resultados de pruebas y cobertura
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.coverage
+*.coveragexml
+coverage*.xml
+coverage*.json
+
+# Archivos temporales de VS/.NET
+*.tmp
+*.temp
+*~
+*.swp
+*.bak
+*.orig
+*.rej
+Desktop.ini
+Thumbs.db
+$RECYCLE.BIN/
+
+# Publicación y paquetes
+[Pp]ublish/
+*.nupkg
+*.snupkg
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Herramientas y cachés
+.dotnet/
+_ReSharper*/
+*.resharper
+.idea/
+.vscode/
+!.vscode/extensions.json

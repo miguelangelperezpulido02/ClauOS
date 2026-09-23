@@ -80,7 +80,7 @@ namespace ClauOS
             System.Diagnostics.Debug.WriteLine("MainWindow shown");
         }
 
-        private void ApplyTheme(string themeName)
+        public static void ApplyTheme(string themeName)
         {
             try
             {

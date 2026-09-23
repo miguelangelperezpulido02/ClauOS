@@ -8,9 +8,14 @@ namespace ClauOS.Views
 {
     public partial class MainView : UserControl
     {
+        private readonly HomeTab _homeTab;
+
         public MainView()
         {
             InitializeComponent();
+            // Reutilizar la instancia creada en XAML: evita un HomeTabViewModel
+            // (y su DispatcherTimer) nuevo en cada vuelta al inicio.
+            _homeTab = (HomeTab)TabHost.Content;
         }
 
         public void ShowFood()
@@ -20,7 +25,7 @@ namespace ClauOS.Views
 
         public void ShowHome()
         {
-            TabHost.Content = new HomeTab();
+            TabHost.Content = _homeTab;
         }
 
         public static MainView? FindMain(DependencyObject child)
@@ -52,27 +57,8 @@ namespace ClauOS.Views
                 settings?.SetSetting("Theme", theme);
                 settings?.Save();
                 
-                // Aplicar tema inmediatamente
-                ApplyTheme(theme);
-            }
-        }
-
-        private void ApplyTheme(string themeName)
-        {
-            try
-            {
-                var dict = new ResourceDictionary
-                {
-                    Source = new Uri($"pack://application:,,,/Resources/Themes/Theme{themeName}.xaml", UriKind.Absolute)
-                };
-                if (Application.Current.Resources.MergedDictionaries.Count > 0)
-                    Application.Current.Resources.MergedDictionaries[0] = dict;
-                else
-                    Application.Current.Resources.MergedDictionaries.Insert(0, dict);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error aplicando tema {themeName}: {ex.Message}");
+                // Aplicar tema inmediatamente (implementación única en App)
+                App.ApplyTheme(theme);
             }
         }
 
