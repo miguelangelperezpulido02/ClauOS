@@ -65,5 +65,6 @@
     <SolidColorBrush x:Key="AuthInfoBrush" Color="#FFB8C8D8"/>
     <SolidColorBrush x:Key="AuthPercentBrush" Color="#FFFF8A80"/>
     <SolidColorBrush x:Key="AuthTitleBrush" Color="#FFD4AF37"/>
+    <SolidColorBrush x:Key="SettingsIconBrush" Color="#FFFFFFFF"/>
 
 </ResourceDictionary>

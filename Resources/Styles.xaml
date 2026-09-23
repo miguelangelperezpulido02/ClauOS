@@ -405,8 +405,6 @@
         <Setter Property="Placement" Value="Bottom"/>
         <Setter Property="HasDropShadow" Value="True"/>
         <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}"/>
-        <Setter Property="Width" Value="200"/>
-        <Setter Property="Height" Value="200"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContextMenu">
@@ -429,7 +427,6 @@
         <Setter Property="Foreground" Value="{DynamicResource OnSurfaceBrush}"/>
         <Setter Property="Padding" Value="12,8"/>
         <Setter Property="MinWidth" Value="0"/>
-        <Setter Property="Width" Value="184"/>
         <Setter Property="FontSize" Value="{StaticResource FontSizeMD}"/>
         <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}"/>
     </Style>

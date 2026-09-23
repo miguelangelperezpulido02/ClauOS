@@ -20,7 +20,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource CardStyle}" Margin="0,0,10,10" Cursor="Hand" MinHeight="170" CornerRadius="{DynamicResource RadiusTheme}">
+                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource CardStyle}" Margin="0,0,10,10" Cursor="Hand" MinHeight="170" CornerRadius="{DynamicResource RadiusTheme}" MouseLeftButtonDown="CounterCard_Click">
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="⏱" FontFamily="Segoe UI Symbol" FontSize="42" HorizontalAlignment="Center" Margin="0,0,0,12" Foreground="{DynamicResource DesktopIconBrush}"/>
                         <TextBlock Text="contador de tiempo" Style="{StaticResource Heading3Style}" TextAlignment="Center"/>

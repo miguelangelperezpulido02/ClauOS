@@ -3,10 +3,171 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ClauOS.Views"
+             xmlns:vm="clr-namespace:ClauOS.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="700">
-    <local:PlaceholderTab Title="⏱️ Contador de Tiempo"
-                          Icon="⏱️"
-                          Description="Aquí se mostrará el tiempo transcurrido desde una fecha especial" />
+             d:DataContext="{d:DesignInstance Type=vm:CounterTabViewModel, IsDesignTimeCreatable=False}"
+             d:DesignHeight="700" d:DesignWidth="700"
+             Loaded="UserControl_Loaded">
+
+    <ScrollViewer Style="{StaticResource ModernScrollViewerStyle}" Padding="24">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Center">
+
+            <!-- Cabecera -->
+            <Grid Margin="0,24,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="← Volver"
+                        Style="{StaticResource GhostButtonStyle}"
+                        VerticalAlignment="Center"
+                        FontSize="16" Padding="8,4"
+                        Click="BackButton_Click"/>
+                <TextBlock Grid.Column="1" Text="⏱ Contador de tiempo"
+                           Style="{StaticResource Heading2Style}"
+                           TextAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+
+            <TextBlock Text="TIEMPO EN PAREJA"
+                       Style="{StaticResource BodyStyle}"
+                       Foreground="{DynamicResource OnBackgroundBrush}"
+                       FontSize="20"
+                       TextAlignment="Center"
+                       Margin="0,8,0,24"/>
+
+            <!-- Contador principal: 3 cards -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}" Margin="0,0,8,0" CornerRadius="{DynamicResource RadiusTheme}" MinHeight="170" Padding="16,28">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Days}"
+                                   FontSize="52" FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource DesktopIconBrush}"/>
+                        <TextBlock Text="días"
+                                   Style="{StaticResource CaptionStyle}"
+                                   TextAlignment="Center" Margin="0,8,0,0"
+                                   Foreground="{DynamicResource DesktopDescriptionBrush}"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="8,0,8,0" CornerRadius="{DynamicResource RadiusTheme}" MinHeight="170" Padding="16,28">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Hours}"
+                                   FontSize="52" FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource DesktopIconBrush}"/>
+                        <TextBlock Text="horas"
+                                   Style="{StaticResource CaptionStyle}"
+                                   TextAlignment="Center" Margin="0,8,0,0"
+                                   Foreground="{DynamicResource DesktopDescriptionBrush}"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}" Margin="8,0,0,0" CornerRadius="{DynamicResource RadiusTheme}" MinHeight="170" Padding="16,28">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Minutes}"
+                                   FontSize="52" FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource DesktopIconBrush}"/>
+                        <TextBlock Text="minutos"
+                                   Style="{StaticResource CaptionStyle}"
+                                   TextAlignment="Center" Margin="0,8,0,0"
+                                   Foreground="{DynamicResource DesktopDescriptionBrush}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Tiempo total legible -->
+            <Border Style="{StaticResource CardStyle}"
+                    Background="{DynamicResource PrimaryGradientBrush}"
+                    BorderThickness="0"
+                    CornerRadius="{DynamicResource RadiusTheme}"
+                    Padding="20"
+                    Margin="0,0,0,12">
+                <TextBlock Text="{Binding TotalElapsed}"
+                           Style="{StaticResource BodyStyle}"
+                           TextAlignment="Center"
+                           Foreground="{DynamicResource OnPrimaryBrush}"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           LineHeight="28"
+                           TextWrapping="Wrap"/>
+            </Border>
+
+            <Button x:Name="HintButton"
+                    Content="¿Sabes cuánto tiempo es eso?"
+                    Style="{StaticResource GhostButtonStyle}"
+                    Foreground="{DynamicResource DesktopIconBrush}"
+                    Command="{Binding ToggleComparisonsCommand}"
+                    HorizontalAlignment="Center"
+                    FontSize="20" FontWeight="SemiBold"
+                    Margin="0,0,0,12">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                        <TranslateTransform X="0"/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+
+            <ItemsControl ItemsSource="{Binding VisibleComparisons}"
+                          Margin="0,0,0,24"
+                          Visibility="{Binding IsComparisonsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource CardStyle}"
+                                CornerRadius="{DynamicResource RadiusTheme}"
+                                Margin="0,0,0,8" Padding="20"
+                                Opacity="0">
+                            <Border.RenderTransform>
+                                <TranslateTransform Y="20"/>
+                            </Border.RenderTransform>
+                            <Border.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                             From="0" To="1" Duration="0:0:0.4"/>
+                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                                             From="20" To="0" Duration="0:0:0.4">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Border.Triggers>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Emoji}"
+                                           FontSize="32"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Value}"
+                                           FontSize="28" FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           Foreground="{DynamicResource DesktopIconBrush}"/>
+                                <TextBlock Text="{Binding Label}"
+                                           Style="{StaticResource BodyStyle}"
+                                           FontWeight="Bold"
+                                           TextAlignment="Center"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

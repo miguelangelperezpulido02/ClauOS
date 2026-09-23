@@ -9,7 +9,8 @@
              d:DataContext="{d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="700" d:DesignWidth="1000">
 
-    <Grid Background="{DynamicResource BackgroundGradientBrush}">
+    <Grid Background="{DynamicResource BackgroundGradientBrush}"
+          PreviewKeyDown="Root_PreviewKeyDown">
 
         <!-- Contenido: HomeTab o la app abierta desde sus tarjetas -->
         <ContentControl x:Name="TabHost">
@@ -26,19 +27,20 @@
                 Padding="12">
             <Button x:Name="SettingsButton" Content="⚙️"
                     Style="{StaticResource GhostButtonStyle}"
+                    Foreground="{DynamicResource SettingsIconBrush}"
                     Width="64" Height="64"
                     FontSize="28"
                     HorizontalAlignment="Left"
                     Click="SettingsButton_Click">
                 <Button.ContextMenu>
                     <ContextMenu x:Name="SettingsContextMenu" Style="{StaticResource ModernContextMenuStyle}" Placement="Top">
-                        <MenuItem Header="tema" Style="{StaticResource ModernMenuItemStyle}">
+                        <MenuItem Header="TEMA" Style="{StaticResource ModernMenuItemStyle}">
                             <MenuItem Header="Default (Rosa)" Click="Theme_Click" Tag="Default" Style="{StaticResource ModernMenuItemStyle}"/>
                             <MenuItem Header="1989 (Pastel)" Click="Theme_Click" Tag="1989" Style="{StaticResource ModernMenuItemStyle}"/>
                             <MenuItem Header="Reputation (Oscuro)" Click="Theme_Click" Tag="Reputation" Style="{StaticResource ModernMenuItemStyle}"/>
                         </MenuItem>
                         <Separator Style="{StaticResource ModernSeparatorStyle}"/>
-                        <MenuItem Header="info" Style="{StaticResource ModernMenuItemStyle}" Click="About_Click"/>
+                        <MenuItem Header="INFO" Style="{StaticResource ModernMenuItemStyle}" Click="About_Click"/>
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>

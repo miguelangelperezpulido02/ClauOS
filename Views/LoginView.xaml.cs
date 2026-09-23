@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,6 +13,20 @@ namespace ClauOS.Views
         {
             InitializeComponent();
             DataContext = App.AppHost!.Services.GetRequiredService<LoginViewModel>();
+            if (DataContext is LoginViewModel vm)
+                vm.PropertyChanged += Vm_PropertyChanged;
+        }
+
+        // El PasswordBox no admite binding: refleja aquí los cambios
+        // que el ViewModel haga sobre Password (p. ej. limpiarla tras un error).
+        private void Vm_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(LoginViewModel.Password)
+                && sender is LoginViewModel vm
+                && PasswordBox.Password != vm.Password)
+            {
+                PasswordBox.Password = vm.Password;
+            }
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)

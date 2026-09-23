@@ -17,5 +17,10 @@ namespace ClauOS.Views
         {
             MainView.FindMain(this)?.ShowFood();
         }
+
+        private void CounterCard_Click(object sender, MouseButtonEventArgs e)
+        {
+            MainView.FindMain(this)?.ShowCounter();
+        }
     }
 }

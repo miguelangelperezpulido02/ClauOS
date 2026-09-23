@@ -25,10 +25,12 @@ namespace ClauOS
                         services.AddTransient<MainViewModel>();
                         services.AddTransient<HomeTabViewModel>();
                         services.AddTransient<FoodTabViewModel>();
+                        services.AddTransient<CounterTabViewModel>();
                         services.AddTransient<LoginView>();
                         services.AddTransient<SplashView>();
                         services.AddTransient<MainView>();
                         services.AddTransient<FoodTab>();
+                        services.AddTransient<CounterTab>();
                         services.AddTransient<MainWindow>();
                     })
                     .Build();

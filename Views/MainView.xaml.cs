@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using ClauOS.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,11 @@ namespace ClauOS.Views
             TabHost.Content = new FoodTab();
         }
 
+        public void ShowCounter()
+        {
+            TabHost.Content = new CounterTab();
+        }
+
         public void ShowHome()
         {
             TabHost.Content = _homeTab;
@@ -38,6 +44,24 @@ namespace ClauOS.Views
                 current = VisualTreeHelper.GetParent(current);
             }
             return null;
+        }
+
+        private void Root_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Escape || TabHost.Content is HomeTab || SettingsContextMenu.IsOpen)
+                return;
+
+            // Si el desplegable de un ComboBox está abierto, Escape solo lo cierra
+            DependencyObject? current = e.OriginalSource as DependencyObject;
+            while (current != null)
+            {
+                if (current is ComboBox combo && combo.IsDropDownOpen)
+                    return;
+                current = VisualTreeHelper.GetParent(current);
+            }
+
+            ShowHome();
+            e.Handled = true;
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)

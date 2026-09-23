@@ -19,6 +19,7 @@
                 <Button Content="← Volver"
                         Style="{StaticResource GhostButtonStyle}"
                         VerticalAlignment="Center"
+                        FontSize="21" Padding="12,6"
                         Click="BackButton_Click"/>
                 <TextBlock Grid.Column="1" Text="🍴 Comida aleatoria"
                            Style="{StaticResource Heading2Style}"
@@ -141,7 +142,8 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="{Binding Emoji}" FontSize="24"
-                                               VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                               VerticalAlignment="Center" Margin="0,0,12,0"
+                                               Foreground="{DynamicResource DesktopIconBrush}"/>
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                         <TextBlock Text="{Binding Name}"
                                                    Style="{StaticResource BodyStyle}"
