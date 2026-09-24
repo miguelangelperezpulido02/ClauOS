@@ -29,6 +29,11 @@ namespace ClauOS.Views
             TabHost.Content = new CounterTab();
         }
 
+        public void ShowTickets()
+        {
+            TabHost.Content = new TicketsTab();
+        }
+
         public void ShowHome()
         {
             TabHost.Content = _homeTab;
@@ -60,6 +65,12 @@ namespace ClauOS.Views
                 current = VisualTreeHelper.GetParent(current);
             }
 
+            if (TabHost.Content is TicketsTab tickets && tickets.TryCloseCelebration())
+            {
+                e.Handled = true;
+                return;
+            }
+
             ShowHome();
             e.Handled = true;
         }
@@ -88,7 +99,7 @@ namespace ClauOS.Views
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("ClauOS v1.0\nHecho con ❤️ para Claudia", "Acerca de", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("ClauOS v0.4\nHecho con ❤️ para Claudia", "Acerca de", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

@@ -44,6 +44,7 @@ namespace ClauOS.Views
             {
                 _vm.ShakeRequested -= StartShakeHintButton;
                 _vm.ShakeStopRequested -= StopShakeHintButton;
+                _vm.Stop();
             }
             _vm = null;
         }
@@ -148,5 +149,7 @@ namespace ClauOS.Views
                 main.ShowHome();
             }
         }
+
+        private void OnRequestBringIntoView(object sender, RequestBringIntoViewEventArgs e) => e.Handled = true;
     }
 }

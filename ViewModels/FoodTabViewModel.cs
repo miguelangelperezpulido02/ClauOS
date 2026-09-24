@@ -157,6 +157,11 @@ namespace ClauOS.ViewModels
             }
         }
 
+        public void Stop()
+        {
+            _slotTimer.Stop();
+        }
+
         [RelayCommand]
         private void ToggleManagement() => IsManagementVisible = !IsManagementVisible;
 

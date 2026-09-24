@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -105,9 +106,13 @@ namespace ClauOS.ViewModels
             AllComparisons.Add(new ComparisonItem("🦝", nookMortgages.ToString("N0"), "HIPOTECAS PAGADAS A TOM NOOK"));
 
             var visibleCount = Math.Min(VisibleComparisons.Count, AllComparisons.Count);
-            VisibleComparisons.Clear();
+            while (VisibleComparisons.Count > visibleCount)
+                VisibleComparisons.RemoveAt(VisibleComparisons.Count - 1);
             for (var i = 0; i < visibleCount; i++)
-                VisibleComparisons.Add(AllComparisons[i]);
+            {
+                if (!VisibleComparisons[i].Equals(AllComparisons[i]))
+                    VisibleComparisons[i] = AllComparisons[i];
+            }
         }
 
         private string FormatTotalElapsed(TimeSpan ts)
@@ -127,11 +132,17 @@ namespace ClauOS.ViewModels
             return parts.Count > 0 ? string.Join(", ", parts) : "Menos de un minuto";
         }
 
+        public void Stop()
+        {
+            _timer.Stop();
+        }
+
         private async Task AnimateEntryAsync()
         {
-            var targetDays = int.Parse(Days.Replace(",", "").Replace(".", ""));
-            var targetHours = int.Parse(Hours);
-            var targetMinutes = int.Parse(Minutes);
+            if (!int.TryParse(Days, NumberStyles.AllowThousands, CultureInfo.CurrentCulture, out var targetDays)
+                || !int.TryParse(Hours, out var targetHours)
+                || !int.TryParse(Minutes, out var targetMinutes))
+                return;
 
             const int steps = 20;
             const int delayMs = 40;

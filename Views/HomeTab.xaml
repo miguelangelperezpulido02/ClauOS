@@ -44,7 +44,7 @@
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource CardStyle}" Margin="10,10,0,0" Cursor="Hand" MinHeight="170" CornerRadius="{DynamicResource RadiusTheme}">
+                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource CardStyle}" Margin="10,10,0,0" Cursor="Hand" MinHeight="170" CornerRadius="{DynamicResource RadiusTheme}" MouseLeftButtonDown="TicketsCard_Click">
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="🎫" FontFamily="Segoe UI Symbol" FontSize="42" HorizontalAlignment="Center" Margin="0,0,0,12" Foreground="{DynamicResource DesktopIconBrush}"/>
                         <TextBlock Text="tickets de amor" Style="{StaticResource Heading3Style}" TextAlignment="Center"/>

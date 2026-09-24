@@ -8,7 +8,8 @@
              d:DesignHeight="700" d:DesignWidth="700">
 
     <ScrollViewer Style="{StaticResource ModernScrollViewerStyle}" Padding="24">
-        <StackPanel MaxWidth="720" HorizontalAlignment="Center">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Center"
+                    RequestBringIntoView="OnRequestBringIntoView">
 
             <!-- Cabecera -->
             <Grid Margin="0,40,0,16">

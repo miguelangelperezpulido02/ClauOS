@@ -11,11 +11,14 @@ namespace ClauOS.Views
         {
             InitializeComponent();
             DataContext = App.AppHost!.Services.GetRequiredService<FoodTabViewModel>();
+            Unloaded += (_, _) => (DataContext as FoodTabViewModel)?.Stop();
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             MainView.FindMain(this)?.ShowHome();
         }
+
+        private void OnRequestBringIntoView(object sender, RequestBringIntoViewEventArgs e) => e.Handled = true;
     }
 }

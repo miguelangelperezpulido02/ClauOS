@@ -22,5 +22,10 @@ namespace ClauOS.Views
         {
             MainView.FindMain(this)?.ShowCounter();
         }
+
+        private void TicketsCard_Click(object sender, MouseButtonEventArgs e)
+        {
+            MainView.FindMain(this)?.ShowTickets();
+        }
     }
 }

@@ -10,7 +10,8 @@
              Loaded="UserControl_Loaded">
 
     <ScrollViewer Style="{StaticResource ModernScrollViewerStyle}" Padding="24">
-        <StackPanel MaxWidth="720" HorizontalAlignment="Center">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Center"
+                    RequestBringIntoView="OnRequestBringIntoView">
 
             <!-- Cabecera -->
             <Grid Margin="0,24,0,8">
