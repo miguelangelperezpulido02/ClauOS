@@ -17,6 +17,7 @@
     <Color x:Key="SuccessColor">#FF00CC66</Color>
     <Color x:Key="OutlineColor">#FF3D3D3D</Color>
     <Color x:Key="ShadowColor">#4A000000</Color>
+    <Color x:Key="BackButtonColor">#FFFFFFFF</Color>
 
     <SolidColorBrush x:Key="PrimaryLightBrush" Color="{StaticResource PrimaryLightColor}"/>
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
@@ -33,6 +34,7 @@
     <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}"/>
     <SolidColorBrush x:Key="OutlineBrush" Color="{StaticResource OutlineColor}"/>
     <SolidColorBrush x:Key="ShadowBrush" Color="{StaticResource ShadowColor}"/>
+    <SolidColorBrush x:Key="BackButtonBrush" Color="{StaticResource BackButtonColor}"/>
 
     <LinearGradientBrush x:Key="PrimaryGradientBrush" StartPoint="0,0" EndPoint="1,1">
         <GradientStop Color="#FF2D2D2D" Offset="0"/>

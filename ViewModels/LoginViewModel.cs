@@ -22,6 +22,18 @@ namespace ClauOS.ViewModels
         [ObservableProperty]
         private bool _hasError;
 
+        public bool IsDevSkipVisible
+        {
+            get
+            {
+#if DEBUG
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
         public LoginViewModel(INavigationService navigation, ISettingsService settings)
         {
             _navigation = navigation;
@@ -84,6 +96,15 @@ namespace ClauOS.ViewModels
         {
             HasError = false;
             ErrorMessage = null;
+        }
+
+        [RelayCommand]
+        private void DevSkip()
+        {
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                _navigation.NavigateToMain();
+            });
         }
     }
 }

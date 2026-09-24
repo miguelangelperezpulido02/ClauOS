@@ -34,6 +34,11 @@ namespace ClauOS.Views
             TabHost.Content = new TicketsTab();
         }
 
+        public void ShowRoulette()
+        {
+            TabHost.Content = new RouletteTab();
+        }
+
         public void ShowHome()
         {
             TabHost.Content = _homeTab;
@@ -99,7 +104,7 @@ namespace ClauOS.Views
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-                MessageBox.Show("ClauOS v0.4\nHecho con ❤️ para Claudia", "Acerca de", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("ClauOS v0.5\nHecho con ❤️ para Claudia", "Acerca de", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

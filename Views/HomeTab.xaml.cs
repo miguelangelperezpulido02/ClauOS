@@ -27,5 +27,10 @@ namespace ClauOS.Views
         {
             MainView.FindMain(this)?.ShowTickets();
         }
+
+        private void RouletteCard_Click(object sender, MouseButtonEventArgs e)
+        {
+            MainView.FindMain(this)?.ShowRoulette();
+        }
     }
 }

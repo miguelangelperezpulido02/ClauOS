@@ -429,6 +429,61 @@
         <Setter Property="MinWidth" Value="0"/>
         <Setter Property="FontSize" Value="{StaticResource FontSizeMD}"/>
         <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+                    <Border x:Name="ItemBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="0"
+                            CornerRadius="{DynamicResource RadiusTheme}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter ContentSource="Header"
+                                              RecognizesAccessKey="True"
+                                              VerticalAlignment="Center"/>
+                            <TextBlock x:Name="Arrow" Grid.Column="1" Text="›"
+                                       Margin="16,0,0,0" VerticalAlignment="Center"/>
+                            <Popup x:Name="PART_Popup"
+                                   AllowsTransparency="True" Focusable="False"
+                                   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Placement="Right" HorizontalOffset="-2" VerticalOffset="-4">
+                                <Border Background="{DynamicResource SurfaceBrush}"
+                                        BorderBrush="{DynamicResource OutlineBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="{DynamicResource RadiusTheme}"
+                                        Padding="4"
+                                        Effect="{StaticResource ShadowMD}"
+                                        SnapsToDevicePixels="True">
+                                    <StackPanel IsItemsHost="True"/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Role" Value="TopLevelItem">
+                            <Setter TargetName="PART_Popup" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="Arrow" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="Role" Value="SubmenuItem">
+                            <Setter TargetName="PART_Popup" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="Arrow" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource AccentBrush}"/>
+                            <Setter TargetName="ItemBorder" Property="TextElement.Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ItemBorder" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style TargetType="MenuItem" BasedOn="{StaticResource ModernMenuItemStyle}"/>

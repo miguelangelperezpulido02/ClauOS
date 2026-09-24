@@ -3,10 +3,154 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ClauOS.Views"
+             xmlns:vm="clr-namespace:ClauOS.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="700">
-    <local:PlaceholderTab Title="🎵 Ruleta Musical"
-                          Icon="🎵"
-                          Description="Gira la ruleta para elegir qué música escuchar" />
+             d:DesignHeight="900" d:DesignWidth="700">
+
+    <ScrollViewer Style="{StaticResource ModernScrollViewerStyle}" Padding="24">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Center"
+                    RequestBringIntoView="OnRequestBringIntoView">
+
+            <!-- Cabecera -->
+            <Grid Margin="0,40,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="← Volver"
+                        Style="{StaticResource GhostButtonStyle}"
+                        Foreground="{DynamicResource BackButtonBrush}"
+                        VerticalAlignment="Center"
+                        FontSize="21" Padding="12,6"
+                        Click="BackButton_Click"/>
+                <TextBlock Grid.Column="1" Text="🎵 Ruleta musical"
+                           Style="{StaticResource Heading2Style}"
+                           TextAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+
+            <TextBlock Text="Gira la ruleta y descubre qué canción de Taylor Swift escuchar hoy"
+                       Style="{StaticResource BodyStyle}"
+                       TextAlignment="Center" Margin="0,0,0,16" TextWrapping="Wrap"
+                       Foreground="{DynamicResource DesktopDescriptionBrush}"/>
+
+            <!-- Rueda -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+                <StackPanel>
+                    <Grid Width="320" Height="320" HorizontalAlignment="Center">
+                        <Canvas x:Name="WheelCanvas" Width="320" Height="320">
+                            <Canvas.RenderTransform>
+                                <RotateTransform x:Name="WheelRotation" CenterX="160" CenterY="160"/>
+                            </Canvas.RenderTransform>
+                        </Canvas>
+                        <!-- Puntero fijo -->
+                        <Polygon Points="160,2 146,30 174,30"
+                                 Fill="#FFFFD54F"
+                                 Stroke="{DynamicResource OutlineBrush}"
+                                 StrokeThickness="1"/>
+                        <!-- Centro -->
+                        <Ellipse Width="64" Height="64"
+                                 Fill="{DynamicResource SurfaceBrush}"
+                                 Stroke="{DynamicResource OutlineBrush}"
+                                 StrokeThickness="1"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="🎵" FontSize="28"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <TextBlock Text="{Binding WinnerEmoji}"
+                               FontSize="48" HorizontalAlignment="Center" Margin="0,8,0,0"
+                               Foreground="{DynamicResource DesktopIconBrush}"/>
+                    <TextBlock Text="{Binding WinnerTitle}"
+                               Style="{StaticResource Heading2Style}"
+                               TextAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap"/>
+                    <Border Background="{DynamicResource PrimaryGradientBrush}"
+                            CornerRadius="{DynamicResource RadiusTheme}"
+                            Padding="14,4" Margin="0,12,0,0"
+                            HorizontalAlignment="Center"
+                            Visibility="{Binding HasResult, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <TextBlock Text="{Binding WinnerArtist}"
+                                   Foreground="{DynamicResource OnPrimaryBrush}"
+                                   FontWeight="SemiBold"/>
+                    </Border>
+                    <TextBlock Text="{Binding FunPhrase}"
+                               Style="{StaticResource BodyStyle}"
+                               TextAlignment="Center" Margin="0,12,0,0"
+                               Foreground="{DynamicResource DesktopDescriptionBrush}"
+                               FontStyle="Italic" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Botón de giro -->
+            <Button Content="🎡 ¡GIRAR!"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Click="SpinButton_Click"
+                    IsEnabled="{Binding IsSpinning, Converter={StaticResource InverseBoolConverter}}"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,16" MinWidth="230" Height="52" FontSize="16"/>
+
+            <!-- Mis canciones -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,24">
+                <StackPanel>
+                    <TextBlock Text="Mis canciones"
+                               Style="{StaticResource Heading3Style}" Margin="0,0,0,12"/>
+
+                    <ListView ItemsSource="{Binding Songs}"
+                              MaxHeight="220"
+                              Background="Transparent" BorderThickness="0"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Emoji}" FontSize="24"
+                                               VerticalAlignment="Center" Margin="0,0,12,0"
+                                               Foreground="{DynamicResource DesktopIconBrush}"/>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Title}"
+                                                   Style="{StaticResource BodyStyle}"
+                                                   FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding Artist}"
+                                                   Style="{StaticResource CaptionStyle}"/>
+                                    </StackPanel>
+                                    <Button Grid.Column="2" Content="🗑️"
+                                            Style="{StaticResource GhostButtonStyle}"
+                                            Command="{Binding DataContext.DeleteSongCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}"
+                                            Padding="8,4"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <Separator Style="{StaticResource ModernSeparatorStyle}" Margin="0,16"/>
+
+                    <TextBlock Text="Añadir canción (máx. 12)"
+                               Style="{StaticResource CaptionStyle}" Margin="0,0,0,8"/>
+
+                    <TextBox Text="{Binding InputTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource ModernTextBoxStyle}"
+                             Margin="0,0,0,8"/>
+                    <TextBox Text="{Binding InputAlbum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource ModernTextBoxStyle}"
+                             Margin="0,0,0,12"/>
+
+                    <TextBlock Text="{Binding Notice}"
+                               Style="{StaticResource CaptionStyle}"
+                               Foreground="{DynamicResource DesktopIconBrush}"
+                               Margin="0,0,0,8" TextWrapping="Wrap"/>
+
+                    <Button Content="Añadir"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding AddSongCommand}"
+                            MinWidth="120"
+                            HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

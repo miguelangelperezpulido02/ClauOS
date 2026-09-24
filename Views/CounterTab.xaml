@@ -21,6 +21,7 @@
                 </Grid.ColumnDefinitions>
                 <Button Content="← Volver"
                         Style="{StaticResource GhostButtonStyle}"
+                        Foreground="{DynamicResource BackButtonBrush}"
                         VerticalAlignment="Center"
                         FontSize="16" Padding="8,4"
                         Click="BackButton_Click"/>

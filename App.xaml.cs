@@ -27,12 +27,14 @@ namespace ClauOS
                         services.AddTransient<FoodTabViewModel>();
                         services.AddTransient<CounterTabViewModel>();
                         services.AddTransient<TicketsTabViewModel>();
+                        services.AddTransient<RouletteTabViewModel>();
                         services.AddTransient<LoginView>();
                         services.AddTransient<SplashView>();
                         services.AddTransient<MainView>();
                         services.AddTransient<FoodTab>();
                         services.AddTransient<CounterTab>();
                         services.AddTransient<TicketsTab>();
+                        services.AddTransient<RouletteTab>();
                         services.AddTransient<MainWindow>();
                     })
                     .Build();

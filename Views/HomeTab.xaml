@@ -28,7 +28,7 @@
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource CardStyle}" Margin="10,0,0,10" Cursor="Hand" MinHeight="170" CornerRadius="{DynamicResource RadiusTheme}">
+                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource CardStyle}" Margin="10,0,0,10" Cursor="Hand" MinHeight="170" CornerRadius="{DynamicResource RadiusTheme}" MouseLeftButtonDown="RouletteCard_Click">
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="♫" FontFamily="Segoe UI Symbol" FontSize="42" HorizontalAlignment="Center" Margin="0,0,0,12" Foreground="{DynamicResource DesktopIconBrush}"/>
                         <TextBlock Text="ruleta musical" Style="{StaticResource Heading3Style}" TextAlignment="Center"/>

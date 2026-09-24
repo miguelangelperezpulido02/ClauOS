@@ -115,12 +115,21 @@
 
                     <!-- Hint -->
                     <TextBlock Text="Usuario: Claudia  •  Contraseña: claudia"
-                                Style="{StaticResource CaptionStyle}"
-                                TextAlignment="Center"
-                                Margin="0,20,0,0"
-                                Opacity="0.6"
-                                FontSize="11"
-                                Foreground="{DynamicResource AuthMutedBrush}"/>
+                                 Style="{StaticResource CaptionStyle}"
+                                 TextAlignment="Center"
+                                 Margin="0,20,0,0"
+                                 Opacity="0.6"
+                                 FontSize="11"
+                                 Foreground="{DynamicResource AuthMutedBrush}"/>
+
+                    <!-- Dev skip (solo DEBUG) -->
+                    <Button Content="⏩ dev skip"
+                            Style="{StaticResource GhostButtonStyle}"
+                            Foreground="{DynamicResource BackButtonBrush}"
+                            Command="{Binding DevSkipCommand}"
+                            HorizontalAlignment="Center"
+                            Margin="0,12,0,0"
+                            Visibility="{Binding IsDevSkipVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
                 </StackPanel>
             </Border>
         </ScrollViewer>
