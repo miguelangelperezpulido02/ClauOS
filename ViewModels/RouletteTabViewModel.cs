@@ -36,6 +36,7 @@ namespace ClauOS.ViewModels
         };
 
         private readonly ISettingsService _settings;
+        private readonly ISoundService _sounds;
         private readonly Random _random = new();
         private int _lastWinnerIndex = -1;
         private int _lastPhraseIndex = -1;
@@ -69,9 +70,10 @@ namespace ClauOS.ViewModels
         [ObservableProperty]
         private string _funPhrase = "Pulsa GIRAR y deja que el azar decida";
 
-        public RouletteTabViewModel(ISettingsService settings)
+        public RouletteTabViewModel(ISettingsService settings, ISoundService sounds)
         {
             _settings = settings;
+            _sounds = sounds;
             LoadSongs();
         }
 
@@ -119,6 +121,7 @@ namespace ClauOS.ViewModels
             FunPhrase = NextPhrase();
             HasResult = true;
             IsSpinning = false;
+            _sounds.Play(SoundKind.Fanfare);
         }
 
         private string NextPhrase()
@@ -155,6 +158,7 @@ namespace ClauOS.ViewModels
             InputAlbum = string.Empty;
             Notice = string.Empty;
             Persist();
+            _sounds.Play(SoundKind.Pop);
         }
 
         [RelayCommand]
@@ -168,6 +172,7 @@ namespace ClauOS.ViewModels
 
             Songs.Remove(song);
             Persist();
+            _sounds.Play(SoundKind.Pop);
         }
     }
 }

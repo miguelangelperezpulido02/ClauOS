@@ -4,6 +4,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using ClauOS.Models;
+using ClauOS.Services;
 using ClauOS.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -48,6 +49,9 @@ namespace ClauOS.Views
             new(Color.FromArgb(0xBF, 0xFF, 0xFF, 0xFF));
 
         private readonly List<Shape> _slicePaths = new();
+        private readonly ISoundService _sounds;
+
+        private CancellationTokenSource? _tickCts;
 
         private RouletteTabViewModel ViewModel => (RouletteTabViewModel)DataContext;
 
@@ -60,16 +64,22 @@ namespace ClauOS.Views
         {
             InitializeComponent();
             DataContext = App.AppHost!.Services.GetRequiredService<RouletteTabViewModel>();
+            _sounds = App.AppHost!.Services.GetRequiredService<ISoundService>();
 
             ViewModel.Songs.CollectionChanged += (_, _) =>
             {
+                _tickCts?.Cancel();
                 WheelRotation.BeginAnimation(RotateTransform.AngleProperty, null);
                 ViewModel.IsSpinning = false;
                 BuildWheel();
             };
             BuildWheel();
 
-            Unloaded += (_, _) => WheelRotation.BeginAnimation(RotateTransform.AngleProperty, null);
+            Unloaded += (_, _) =>
+            {
+                _tickCts?.Cancel();
+                WheelRotation.BeginAnimation(RotateTransform.AngleProperty, null);
+            };
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -212,6 +222,33 @@ namespace ClauOS.Views
             };
             animation.Completed += OnSpinCompleted;
             WheelRotation.BeginAnimation(RotateTransform.AngleProperty, animation);
+
+            _tickCts?.Cancel();
+            _tickCts = new CancellationTokenSource();
+            _ = PlayTicksAsync(SpinSeconds, _tickCts.Token);
+        }
+
+        // Ticks a intervalos de ángulo iguales: con el ease-out cúbico
+        // suenan rápidos al principio y se espacian al frenar.
+        private async Task PlayTicksAsync(double seconds, CancellationToken token)
+        {
+            const int ticks = 26;
+            double previous = 0.0;
+            for (int i = 1; i <= ticks; i++)
+            {
+                double at = seconds * (1.0 - Math.Cbrt(1.0 - (double)i / ticks));
+                int delay = Math.Max(0, (int)((at - previous) * 1000.0));
+                previous = at;
+                try
+                {
+                    await Task.Delay(delay, token);
+                }
+                catch (TaskCanceledException)
+                {
+                    return;
+                }
+                _sounds.Play(SoundKind.Tick);
+            }
         }
 
         private void OnSpinCompleted(object? sender, EventArgs e)

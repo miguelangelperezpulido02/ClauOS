@@ -9,6 +9,7 @@ namespace ClauOS.ViewModels
     {
         private readonly INavigationService _navigation;
         private readonly ISettingsService _settings;
+        private readonly ISoundService _sounds;
 
         [ObservableProperty]
         private string _username = "Claudia";
@@ -34,10 +35,11 @@ namespace ClauOS.ViewModels
             }
         }
 
-        public LoginViewModel(INavigationService navigation, ISettingsService settings)
+        public LoginViewModel(INavigationService navigation, ISettingsService settings, ISoundService sounds)
         {
             _navigation = navigation;
             _settings = settings;
+            _sounds = sounds;
             
             var savedUser = _settings.GetSetting("LastUser", "");
             if (!string.IsNullOrEmpty(savedUser))
@@ -64,6 +66,7 @@ namespace ClauOS.ViewModels
             {
                 _settings.SetSetting("LastUser", Username);
                 _settings.Save();
+                _sounds.Play(SoundKind.Success);
 
                 IsBusy = true;
                 BusyMessage = "Verificando credenciales...";

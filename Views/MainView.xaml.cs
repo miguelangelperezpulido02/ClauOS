@@ -17,6 +17,9 @@ namespace ClauOS.Views
             // Reutilizar la instancia creada en XAML: evita un HomeTabViewModel
             // (y su DispatcherTimer) nuevo en cada vuelta al inicio.
             _homeTab = (HomeTab)TabHost.Content;
+
+            var sounds = App.AppHost?.Services.GetService<ClauOS.Services.ISoundService>();
+            UpdateSoundMenu(sounds);
         }
 
         public void ShowFood()
@@ -104,7 +107,28 @@ namespace ClauOS.Views
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-                MessageBox.Show("ClauOS v0.5\nHecho con ❤️ para Claudia", "Acerca de", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("ClauOS v1.0\nHecho con ❤️ para Claudia", "Acerca de", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void Sound_Click(object sender, RoutedEventArgs e)
+        {
+            var sounds = App.AppHost?.Services.GetService<ClauOS.Services.ISoundService>();
+            if (sounds == null)
+                return;
+
+            sounds.Enabled = !sounds.Enabled;
+            UpdateSoundMenu(sounds);
+            if (sounds.Enabled)
+                sounds.Play(ClauOS.Services.SoundKind.Pop);
+        }
+
+        private void UpdateSoundMenu(ClauOS.Services.ISoundService? sounds)
+        {
+            if (sounds == null)
+                return;
+
+            SoundMenuItem.IsChecked = sounds.Enabled;
+            SoundMenuItem.Header = sounds.Enabled ? "🔊 Sonido" : "🔇 Sonido";
         }
     }
 }

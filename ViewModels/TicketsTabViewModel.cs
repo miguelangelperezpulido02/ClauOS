@@ -32,6 +32,7 @@ namespace ClauOS.ViewModels
         };
 
         private readonly ISettingsService _settings;
+        private readonly ISoundService _sounds;
 
         [ObservableProperty]
         private TicketGroup? _pendingGroup;
@@ -56,9 +57,10 @@ namespace ClauOS.ViewModels
         [ObservableProperty]
         private bool _isCelebrationVisible;
 
-        public TicketsTabViewModel(ISettingsService settings)
+        public TicketsTabViewModel(ISettingsService settings, ISoundService sounds)
         {
             _settings = settings;
+            _sounds = sounds;
             Load();
         }
 
@@ -193,6 +195,7 @@ namespace ClauOS.ViewModels
             Persist();
             CelebratedTicket = item;
             IsCelebrationVisible = true;
+            _sounds.Play(SoundKind.Success);
         }
 
         [RelayCommand]

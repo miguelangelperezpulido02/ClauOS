@@ -40,6 +40,9 @@
                             <MenuItem Header="Reputation (Oscuro)" Click="Theme_Click" Tag="Reputation" Style="{StaticResource ModernMenuItemStyle}"/>
                         </MenuItem>
                         <Separator Style="{StaticResource ModernSeparatorStyle}"/>
+                        <MenuItem x:Name="SoundMenuItem" Header="🔊 Sonido" Style="{StaticResource ModernMenuItemStyle}"
+                                  IsCheckable="True" Click="Sound_Click"/>
+                        <Separator Style="{StaticResource ModernSeparatorStyle}"/>
                         <MenuItem Header="INFO" Style="{StaticResource ModernMenuItemStyle}" Click="About_Click"/>
                     </ContextMenu>
                 </Button.ContextMenu>

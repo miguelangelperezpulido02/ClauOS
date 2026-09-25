@@ -20,6 +20,7 @@ namespace ClauOS
                     {
                         services.AddSingleton<INavigationService, NavigationService>();
                         services.AddSingleton<ISettingsService, JsonSettingsService>();
+                        services.AddSingleton<ISoundService, SoundService>();
                         services.AddTransient<LoginViewModel>();
                         services.AddTransient<SplashViewModel>();
                         services.AddTransient<MainViewModel>();
